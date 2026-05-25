@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrismAI — Architecture</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background: #0f172a; font-family: 'Inter', system-ui, sans-serif; }
+  .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+  .gradient-text { background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .arrow { color: #6b7280; font-size: 24px; }
+  .box { padding: 12px 20px; border-radius: 12px; text-align: center; font-size: 13px; font-weight: 500; }
+</style>
+</head>
+<body class="text-white min-h-screen p-8">
+<div class="max-w-5xl mx-auto">
+  <h1 class="text-3xl font-bold gradient-text text-center mb-2">PrismAI — System Architecture</h1>
+  <p class="text-gray-400 text-center mb-8 text-sm">Multi-Modal Content Intelligence Platform</p>
+
+  <!-- Input Layer -->
+  <div class="flex justify-center gap-6 mb-4">
+    <div class="box bg-purple-500/20 border border-purple-500/30 text-purple-300">📝 Text Input</div>
+    <div class="box bg-blue-500/20 border border-blue-500/30 text-blue-300">🖼️ Image Input</div>
+    <div class="box bg-amber-500/20 border border-amber-500/30 text-amber-300">🎵 Audio Input</div>
+  </div>
+  <div class="text-center text-gray-500 text-2xl mb-4">▼</div>
+
+  <!-- Modality Detection -->
+  <div class="glass rounded-xl p-4 text-center mb-4">
+    <p class="text-xs text-gray-400 mb-2">MODALITY DETECTION</p>
+    <p class="text-sm text-gray-300">Auto-detect content type → Route to appropriate engine</p>
+  </div>
+  <div class="text-center text-gray-500 text-2xl mb-4">▼</div>
+
+  <!-- Analysis Engines -->
+  <div class="grid grid-cols-3 gap-4 mb-4">
+    <div class="glass rounded-xl p-4">
+      <p class="text-sm font-semibold text-purple-300 mb-3">Text Engine</p>
+      <div class="space-y-1 text-xs text-gray-400">
+        <p>• Sentiment Analysis</p>
+        <p>• Named Entity Recognition</p>
+        <p>• Topic Classification</p>
+        <p>• Summarization</p>
+        <p>• Language Detection</p>
+      </div>
+    </div>
+    <div class="glass rounded-xl p-4">
+      <p class="text-sm font-semibold text-blue-300 mb-3">Image Engine</p>
+      <div class="space-y-1 text-xs text-gray-400">
+        <p>• OCR Text Extraction</p>
+        <p>• Scene Understanding</p>
+        <p>• Object Detection</p>
+        <p>• Brand Recognition</p>
+        <p>• Color Palette</p>
+      </div>
+    </div>
+    <div class="glass rounded-xl p-4">
+      <p class="text-sm font-semibold text-amber-300 mb-3">Audio Engine</p>
+      <div class="space-y-1 text-xs text-gray-400">
+        <p>• Transcription</p>
+        <p>• Speaker Detection</p>
+        <p>• Emotion Analysis</p>
+        <p>• Key Topics</p>
+        <p>• Duration Tracking</p>
+      </div>
+    </div>
+  </div>
+  <div class="text-center text-gray-500 text-2xl mb-4">▼</div>
+
+  <!-- Provider Cascade -->
+  <div class="glass rounded-xl p-4 mb-4">
+    <p class="text-xs text-gray-400 mb-3 text-center">PROVIDER CASCADE (AI ENGINE)</p>
+    <div class="flex items-center justify-center gap-3">
+      <div class="box bg-green-500/20 border border-green-500/30 text-green-300 text-xs">MiMo v2.5 Pro <span class="text-gray-500">← Primary</span></div>
+      <span class="text-gray-500">→</span>
+      <div class="box bg-gray-500/20 border border-gray-500/30 text-gray-400 text-xs">DeepSeek V3 <span class="text-gray-500">← Fallback</span></div>
+      <span class="text-gray-500">→</span>
+      <div class="box bg-gray-500/20 border border-gray-500/30 text-gray-400 text-xs">OpenRouter <span class="text-gray-500">← Fallback</span></div>
+    </div>
+  </div>
+  <div class="text-center text-gray-500 text-2xl mb-4">▼</div>
+
+  <!-- Fusion Layer -->
+  <div class="glass rounded-xl p-4 text-center mb-4 glow" style="box-shadow: 0 0 30px rgba(139,92,246,0.2);">
+    <p class="text-xs text-gray-400 mb-2">🔮 MULTI-MODAL FUSION LAYER</p>
+    <p class="text-sm text-gray-300">Cross-modal reasoning — combine text + image + audio insights</p>
+    <p class="text-xs text-green-400 mt-2">Comprehensive content understanding with confidence scoring</p>
+  </div>
+  <div class="text-center text-gray-500 text-2xl mb-4">▼</div>
+
+  <!-- Output Layer -->
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="glass rounded-xl p-4 text-center">
+      <p class="text-sm font-semibold text-green-300 mb-2">REST API</p>
+      <p class="text-xs text-gray-400">FastAPI endpoints</p>
+      <p class="text-xs text-gray-500">/analyze/*, /stats, /history</p>
+    </div>
+    <div class="glass rounded-xl p-4 text-center">
+      <p class="text-sm font-semibold text-blue-300 mb-2">WebSocket</p>
+      <p class="text-xs text-gray-400">Real-time streaming</p>
+      <p class="text-xs text-gray-500">Live analysis results</p>
+    </div>
+    <div class="glass rounded-xl p-4 text-center">
+      <p class="text-sm font-semibold text-purple-300 mb-2">Dashboard</p>
+      <p class="text-xs text-gray-400">Analytics UI</p>
+      <p class="text-xs text-gray-500">Charts, feed, quick analyze</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="text-center text-xs text-gray-500 mt-8">
+    <p>PrismAI v1.0 — Python 3.11+ | FastAPI | Pydantic v2 | httpx | Chart.js</p>
+    <p class="mt-1">31 files · 1,849 lines · Powered by MiMo v2.5 Pro</p>
+  </div>
+</div>
+</body>
+</html>
