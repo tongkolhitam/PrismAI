@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrismAI — Multi-Modal Content Intelligence</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body { background: #0f172a; font-family: 'Inter', system-ui, sans-serif; }
+  .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+  .gradient-text { background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .glow { box-shadow: 0 0 30px rgba(139, 92, 246, 0.15); }
+  .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+  .card-hover:hover { transform: translateY(-2px); transition: all 0.3s; }
+</style>
+</head>
+<body class="text-white min-h-screen">
+<!-- Header -->
+<header class="border-b border-white/10 px-8 py-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-xl">🔮</div>
+      <div>
+        <h1 class="text-xl font-bold gradient-text">PrismAI</h1>
+        <p class="text-xs text-gray-400">Multi-Modal Content Intelligence Platform</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-2 text-sm text-green-400"><span class="w-2 h-2 rounded-full bg-green-400 pulse"></span> System Online</span>
+      <span class="text-sm text-gray-400">MiMo v2.5 Pro</span>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-8 py-6">
+  <!-- Stats Row -->
+  <div class="grid grid-cols-4 gap-4 mb-6">
+    <div class="glass rounded-xl p-5 glow card-hover">
+      <p class="text-gray-400 text-sm mb-1">Total Analyses</p>
+      <p class="text-3xl font-bold gradient-text" id="stat-total">1,247</p>
+      <p class="text-green-400 text-xs mt-1">↑ 12% from yesterday</p>
+    </div>
+    <div class="glass rounded-xl p-5 glow card-hover">
+      <p class="text-gray-400 text-sm mb-1">Avg Confidence</p>
+      <p class="text-3xl font-bold text-blue-400" id="stat-confidence">87.3%</p>
+      <p class="text-green-400 text-xs mt-1">↑ 2.1% improvement</p>
+    </div>
+    <div class="glass rounded-xl p-5 glow card-hover">
+      <p class="text-gray-400 text-sm mb-1">Avg Processing</p>
+      <p class="text-3xl font-bold text-purple-400" id="stat-speed">342ms</p>
+      <p class="text-green-400 text-xs mt-1">↓ 15% faster</p>
+    </div>
+    <div class="glass rounded-xl p-5 glow card-hover">
+      <p class="text-gray-400 text-sm mb-1">Analyses Today</p>
+      <p class="text-3xl font-bold text-amber-400" id="stat-today">89</p>
+      <p class="text-gray-400 text-xs mt-1">since 00:00 WIB</p>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="glass rounded-xl p-5 col-span-2">
+      <h3 class="text-sm font-semibold text-gray-300 mb-4">Analysis Throughput (24h)</h3>
+      <canvas id="throughputChart" height="200"></canvas>
+    </div>
+    <div class="glass rounded-xl p-5">
+      <h3 class="text-sm font-semibold text-gray-300 mb-4">Modality Breakdown</h3>
+      <canvas id="modalityChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Analysis Feed + Input -->
+  <div class="grid grid-cols-3 gap-4">
+    <!-- Live Feed -->
+    <div class="glass rounded-xl p-5 col-span-2">
+      <h3 class="text-sm font-semibold text-gray-300 mb-4">Live Analysis Feed</h3>
+      <div class="space-y-3" id="feed">
+        <div class="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+          <span class="text-lg">📝</span>
+          <div class="flex-1">
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-purple-300">Text Analysis</span>
+              <span class="text-xs text-gray-500">2 min ago</span>
+            </div>
+            <p class="text-sm text-gray-300 mt-1">Sentiment: <span class="text-green-400">Positive</span> (92%) — "Product launch exceeded expectations with strong user engagement..."</p>
+            <div class="flex gap-2 mt-2">
+              <span class="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300">marketing</span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300">product</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+          <span class="text-lg">🖼️</span>
+          <div class="flex-1">
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-blue-300">Image Analysis</span>
+              <span class="text-xs text-gray-500">5 min ago</span>
+            </div>
+            <p class="text-sm text-gray-300 mt-1">Scene: <span class="text-blue-400">Outdoor urban</span> — Detected: buildings, vehicles, signage. Brand logos: 2 detected.</p>
+            <div class="flex gap-2 mt-2">
+              <span class="text-xs px-2 py-0.5 rounded bg-green-500/20 text-green-300">8 objects</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">OCR: 3 text regions</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+          <span class="text-lg">🎵</span>
+          <div class="flex-1">
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-amber-300">Audio Analysis</span>
+              <span class="text-xs text-gray-500">8 min ago</span>
+            </div>
+            <p class="text-sm text-gray-300 mt-1">Emotion: <span class="text-amber-400">Excited</span> — 2 speakers detected. Key topics: AI, product demo, Q3 roadmap.</p>
+            <div class="flex gap-2 mt-2">
+              <span class="text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-300">4:32 duration</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-purple-500/20 text-purple-300">English</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+          <span class="text-lg">🔮</span>
+          <div class="flex-1">
+            <div class="flex justify-between">
+              <span class="text-sm font-medium text-gradient gradient-text">Multi-Modal Fusion</span>
+              <span class="text-xs text-gray-500">12 min ago</span>
+            </div>
+            <p class="text-sm text-gray-300 mt-1">Comprehensive product launch event coverage. Text shows positive sentiment (92%), visuals confirm high attendance with branded materials, audio captures executive enthusiasm. Overall: <span class="text-green-400">High-impact launch event</span>.</p>
+            <div class="flex gap-2 mt-2">
+              <span class="text-xs px-2 py-0.5 rounded bg-gradient-to-r from-purple-500/30 to-blue-500/30 text-white">3 modalities</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-green-500/20 text-green-300">confidence: 94%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Analyze -->
+    <div class="glass rounded-xl p-5">
+      <h3 class="text-sm font-semibold text-gray-300 mb-4">Quick Analyze</h3>
+      <div class="space-y-3">
+        <div>
+          <label class="text-xs text-gray-400">Modality</label>
+          <select id="modality-select" class="w-full mt-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            <option value="text">📝 Text</option>
+            <option value="image">🖼️ Image Description</option>
+            <option value="audio">🎵 Audio Transcription</option>
+            <option value="multimodal">🔮 Multi-Modal</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-400">Input</label>
+          <textarea id="input-text" rows="4" class="w-full mt-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500" placeholder="Paste text, describe an image, or enter transcription..."></textarea>
+        </div>
+        <button onclick="runAnalysis()" class="w-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg py-2.5 text-sm font-semibold hover:opacity-90 transition">
+          Analyze with MiMo
+        </button>
+        <div id="result-box" class="hidden mt-3 p-3 rounded-lg bg-white/5 text-xs text-gray-300"></div>
+      </div>
+
+      <!-- Model Info -->
+      <div class="mt-6 pt-4 border-t border-white/10">
+        <h4 class="text-xs text-gray-400 mb-3">Provider Cascade</h4>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span><span class="text-xs text-gray-300">MiMo v2.5 Pro</span><span class="text-xs text-gray-500 ml-auto">Primary</span></div>
+          <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-500"></span><span class="text-xs text-gray-300">DeepSeek V3</span><span class="text-xs text-gray-500 ml-auto">Fallback</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-white/10 mt-8 px-8 py-4 text-center text-xs text-gray-500">
+  PrismAI v1.0 — Powered by MiMo v2.5 Pro — Built for Xiaomi 100T Creator Incentive
+</footer>
+
+<script>
+// Throughput Chart
+const ctx1 = document.getElementById('throughputChart').getContext('2d');
+new Chart(ctx1, {
+  type: 'line',
+  data: {
+    labels: Array.from({length: 24}, (_, i) => `${i}:00`),
+    datasets: [{
+      label: 'Analyses',
+      data: [3,5,2,1,0,1,4,12,28,35,42,38,45,52,48,41,55,62,58,45,32,18,12,7],
+      borderColor: '#a78bfa',
+      backgroundColor: 'rgba(167,139,250,0.1)',
+      fill: true,
+      tension: 0.4,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6b7280', font: { size: 10 } } },
+      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#6b7280', font: { size: 10 } } }
+    }
+  }
+});
+
+// Modality Chart
+const ctx2 = document.getElementById('modalityChart').getContext('2d');
+new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: ['Text', 'Image', 'Audio', 'Multi-Modal'],
+    datasets: [{
+      data: [487, 312, 198, 250],
+      backgroundColor: ['#a78bfa', '#60a5fa', '#fbbf24', '#34d399'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '65%',
+    plugins: {
+      legend: { position: 'bottom', labels: { color: '#9ca3af', font: { size: 11 }, padding: 15 } }
+    }
+  }
+});
+
+// Mock analysis
+function runAnalysis() {
+  const box = document.getElementById('result-box');
+  box.classList.remove('hidden');
+  box.innerHTML = '<span class="text-purple-400">Analyzing with MiMo...</span>';
+  setTimeout(() => {
+    box.innerHTML = `<div class="space-y-2">
+      <p><span class="text-purple-400 font-medium">Result:</span> Sentiment Positive (89%)</p>
+      <p><span class="text-blue-400">Topics:</span> technology, innovation</p>
+      <p><span class="text-green-400">Confidence:</span> 89%</p>
+      <p><span class="text-gray-500">Processing:</span> 287ms via MiMo v2.5 Pro</p>
+    </div>`;
+  }, 1500);
+}
+</script>
+</body>
+</html>
